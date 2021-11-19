@@ -23,13 +23,13 @@ int* merge(int* A, int l, int r, int e){
         }
     }
     for(int i=0;i<N;i++){
-        if(i=l){
+        if(i==l){
             printf("L");
         }
-        if(i=r){
+        if(i==r){
             printf("R");
         }
-        if(i=e){
+        if(i==e){
             printf("E");
         }
         printf("%i,",A[i]);
