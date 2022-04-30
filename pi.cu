@@ -6,6 +6,8 @@ struct hexdigit {
   unsigned int last: 4;
 };
 
+__global__ 
+
 __device__ int modpow(int n, int a, int mod){
   if(a==0){
     return 1;

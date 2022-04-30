@@ -2,6 +2,6 @@
 
 cd $KWORK
 git add .
-git commit -am "Autosave"
+git commit -am "Save: $1"
 git push origin
 exit
