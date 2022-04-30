@@ -1,12 +1,8 @@
 #include <cstdio>
 #include <math.h>
 
-struct hexdigit {
-  unsigned int first: 4;
-  unsigned int last: 4;
-};
+__global__ int safetruncate(int* start1, int* start2, int* res){
 
-__global__ 
 
 __device__ int modpow(int n, int a, int mod){
   if(a==0){
