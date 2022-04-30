@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd $KWORK
+git add .
+git commit -am "Autosave"
+git push origin
+exit
