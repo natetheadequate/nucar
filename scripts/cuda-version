@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Purpose: nvcc, the cuda compiler, requires the -arch flag to be set to something called a compute capability which is a gpu dependent code. This script echoes that code. In my .bashrc, I have the line:  alias gcu='CUDA_VERSION=${CUDA_VERSION:=$(cuda-version)} && echo $CUDA_VERSION && nvcc -arch=$CUDA_VERSION' 
+# Thus, I can compile a program using just the command gcu. The CUDA_VERSION environmental variable is used to store the version so this script only has to run once per shell (a new shell is created when you srun to a new gpu node, and the parent variable won't be accessible). This is necessary because this script takes roughly 4 seconds to execute because nvidia-smi is a slow command, so running it every time a program is compiled would be painful
+declare -A gpuVersions=( [P100]=sm_60 [K40]=sm_35 [K40m]=sm_35 [K80]=sm_37 [V100-pcie]=sm_70 [V100-sxm2]=sm_70 [V100]=sm_70 [T4]=sm_75 [A100]=sm_80 )
+nvidia-smi >/dev/null 2>&1 || (echo "Not on gpu partition. Run srun with options --partition=gpu and --gres=gpu:1 and --ntasks=1 from login node." && false);
+if [[ $? > 0 ]] 
+then 
+exit $?
+fi
+gpu=$(nvidia-smi | sed -n "9p" | awk '{print $4}')
+if [[ -n "${gpuVersions[$gpu]}" ]]
+then
+echo "${gpuVersions[$gpu]}"
+exit 0
+else
+echo "Using nvidia-smi command, $gpu was determined to be your gpu, which is not in the list of processors ${!gpuVersions[@]} . Its cuda version might be in the table at https://developer.nvidia.com/cuda-gpus (probably in the section for datacenter products)"
+exit 1
+fi
