@@ -1,7 +1,17 @@
 #include <cstdio>
 #include <math.h>
 
-__device__ int safeadd(char*[] addends  
+struct mixednumber{
+   int whole;
+   int numerator;
+   int denominator;
+};:ww
+
+__global__ mixednumber divideBase2(int numerator, int denominator){
+    struct mixednumber ret = { 
+}
+
+__global__ truncadd((void  addends, char* result 
 
 __device__ int modpow(int n, int a, int mod){
   if(a==0){
