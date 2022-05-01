@@ -1,8 +1,7 @@
 #include <cstdio>
 #include <math.h>
 
-__global__ int safetruncate(int* start1, int* start2, int* res){
-
+__device__ int safeadd(char*[] addends  
 
 __device__ int modpow(int n, int a, int mod){
   if(a==0){
