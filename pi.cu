@@ -15,10 +15,10 @@ struct fraction {
 };
 
 // adds/subtracts atomically the quotient shifted right by bit_offset bits,  as an int, at the given index of res
-unsigned int dividerAddSub(unsigned int numerator, unsigned int denominator, unsigned int* res, unsigned int bit_offset, unsigned int index, bool adding){
+int dividerAddSub(unsigned int numerator, unsigned int denominator, unsigned int* res, unsigned int bit_offset, unsigned int index, bool adding){
   unsigned int operand =  ((numerator*sizeof(unsigned int)) >> bit_offset) / denominator;
   if(adding){
-  while( (long unsigned int)  (atomicAdd_system(res[index], operand) + operand) > (unsigned int) 1 >> (2,4*sizeof(unsigned int))){
+  while( atomicAdd(res[index], operand) + operand) > (unsigned int) 1 >> (2,4*sizeof(unsigned int))){
     operand=1;
     index--;
   }
